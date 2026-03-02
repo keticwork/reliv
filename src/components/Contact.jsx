@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 
 // ← Remplace par ton vrai endpoint Formspree après inscription
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/TON_ID_ICI'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mnjbkjoq'
 
 const CONTACT_INFO = [
   { icon: '📍', text: 'Le Luc, Var (83340) — Rayon 5 km'           },
@@ -33,9 +33,13 @@ export default function Contact({ id }) {
 
   const validate = () => {
     const e = {}
-    if (!fields.nom.trim())     e.nom     = 'Champ obligatoire'
-    if (!fields.prenom.trim())  e.prenom  = 'Champ obligatoire'
-    if (!fields.email.trim())   e.email   = 'Champ obligatoire'
+    if (!fields.nom.trim())    e.nom    = 'Champ obligatoire'
+    if (!fields.prenom.trim()) e.prenom = 'Champ obligatoire'
+    if (!fields.email.trim()) {
+      e.email = 'Champ obligatoire'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fields.email)) {
+      e.email = 'Adresse email invalide'
+    }
     if (!fields.message.trim()) e.message = 'Champ obligatoire'
     return e
   }
@@ -52,20 +56,29 @@ export default function Contact({ id }) {
     if (Object.keys(errs).length) { setErrors(errs); return }
 
     setStatus('sending')
-
-    // ── Envoi via Formspree (décommenter quand endpoint configuré) ──
-    // try {
-    //   const res = await fetch(FORMSPREE_ENDPOINT, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    //     body: JSON.stringify(fields),
-    //   })
-    //   if (res.ok) { setStatus('success') } else { setStatus('error') }
-    // } catch { setStatus('error') }
-
-    // ── Simulation (à retirer quand Formspree est configuré) ──
-    await new Promise(r => setTimeout(r, 1200))
-    setStatus('success')
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          nom:     fields.nom,
+          prenom:  fields.prenom,
+          phone:   fields.phone,
+          email:   fields.email,
+          message: fields.message,
+        }),
+      })
+      if (res.ok) {
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   // ── Classe commune pour les inputs ──────────────────────────
