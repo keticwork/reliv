@@ -37,8 +37,8 @@ export default function Contact({ id }) {
     if (!fields.prenom.trim()) e.prenom = 'Champ obligatoire'
     if (!fields.email.trim()) {
       e.email = 'Champ obligatoire'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fields.email)) {
-      e.email = 'Adresse email invalide'
+    } else if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(fields.email.trim())) {
+      e.email = 'Format invalide — exemple : nom@société.fr'
     }
     if (!fields.message.trim()) e.message = 'Champ obligatoire'
     return e
@@ -53,29 +53,24 @@ export default function Contact({ id }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const errs = validate()
-    if (Object.keys(errs).length) { setErrors(errs); return }
-
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs)
+      return   // ← stop total, rien n'est envoyé
+    }
     setStatus('sending')
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          nom:     fields.nom,
-          prenom:  fields.prenom,
-          phone:   fields.phone,
-          email:   fields.email,
-          message: fields.message,
+          nom:     fields.nom.trim(),
+          prenom:  fields.prenom.trim(),
+          phone:   fields.phone.trim(),
+          email:   fields.email.trim(),
+          message: fields.message.trim(),
         }),
       })
-      if (res.ok) {
-        setStatus('success')
-      } else {
-        setStatus('error')
-      }
+      setStatus(res.ok ? 'success' : 'error')
     } catch {
       setStatus('error')
     }
@@ -174,7 +169,7 @@ export default function Contact({ id }) {
                       className={inputClass('nom')}
                       autoComplete="family-name"
                     />
-                    {errors.nom && <p className="text-red-400 text-xs mt-1">{errors.nom}</p>}
+                    {errors.nom && <p className="text-red-500 text-xs font-semibold mt-1 block">{errors.nom}</p>}
                   </div>
                   <div>
                     <label htmlFor="prenom" className="block text-xs font-semibold text-white/55 uppercase tracking-widest mb-2">
@@ -187,7 +182,7 @@ export default function Contact({ id }) {
                       className={inputClass('prenom')}
                       autoComplete="given-name"
                     />
-                    {errors.prenom && <p className="text-red-400 text-xs mt-1">{errors.prenom}</p>}
+                    {errors.prenom && <p className="text-red-500 text-xs font-semibold mt-1 block">{errors.prenom}</p>}
                   </div>
                 </div>
 
@@ -216,7 +211,7 @@ export default function Contact({ id }) {
                       className={inputClass('email')}
                       autoComplete="email"
                     />
-                    {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                    {errors.email && <p className="text-red-500 text-xs font-semibold mt-1 block">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -231,7 +226,7 @@ export default function Contact({ id }) {
                     value={fields.message} onChange={handleChange}
                     className={inputClass('message') + ' resize-none'}
                   />
-                  {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
+                  {errors.message && <p className="text-red-500 text-xs font-semibold mt-1 block">{errors.message}</p>}
                 </div>
 
                 {/* Bouton envoi */}
