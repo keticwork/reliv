@@ -14,6 +14,7 @@
  */
 
 import { useState } from 'react'
+import { QRCodeSVG } from 'qrcode.react'
 
 // ← Remplace par ton vrai endpoint Formspree après inscription
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/TON_ID_ICI'
@@ -104,6 +105,21 @@ export default function Contact({ id }) {
                   {text}
                 </div>
               ))}
+            </div>
+
+            <div className="mt-10">
+              <p className="text-white/40 text-xs uppercase tracking-widest mb-4">
+                Scanner pour visiter le site
+              </p>
+              <div className="inline-block bg-white p-4 rounded-2xl shadow-hover">
+                <QRCodeSVG
+                  value="https://reliv-ten.vercel.app/"
+                  size={160}
+                  bgColor="#ffffff"
+                  fgColor="#0D1B2A"
+                  level="H"
+                />
+              </div>
             </div>
 
             {/* Footer léger */}

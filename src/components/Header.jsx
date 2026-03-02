@@ -4,6 +4,7 @@ const NAV_LINKS = [
   { id: 'probleme',    label: 'Le Problème'  },
   { id: 'solution',    label: 'Solution'     },
   { id: 'moyens',      label: 'Nos Moyens'   },
+  { id: 'expertise',   label: 'Expertise'    },
   { id: 'hub',         label: 'Hub'          },
   { id: 'partenaires', label: 'Bénéfices'    },
   { id: 'franchise',   label: 'Vision'       },

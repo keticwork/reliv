@@ -130,3 +130,14 @@
   .delay-400 { transition-delay: 0.4s; }
   .delay-500 { transition-delay: 0.5s; }
 }
+
+@media (max-width: 768px) {
+  #snap-container {
+    scroll-snap-type: y proximity;
+  }
+
+  .snap-section {
+    scroll-snap-stop: normal;
+    scroll-snap-align: start;
+  }
+}
