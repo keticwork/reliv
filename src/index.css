@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   BASE GLOBALE
+───────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Scroll snap : le conteneur principal est #snap-container */
+  }
+
+  body {
+    @apply font-body text-night antialiased;
+    overflow: hidden; /* L'overflow est géré par #snap-container */
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
+
+  /* Reset scroll sur les balises abbr */
+  abbr[title] {
+    text-decoration: none;
+    cursor: help;
+    @apply text-green-bright;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CONTENEUR SCROLL SNAP
+───────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Conteneur principal scrollable section par section */
+  #snap-container {
+    height: 100dvh; /* dynamic viewport height (mobile-safe) */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    /* Masquer la scrollbar nativement sur tous navigateurs */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #snap-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Chaque section occupe exactement le viewport */
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Boutons ─────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 rounded-full
+           bg-green-bright text-white font-semibold text-sm tracking-wide
+           shadow-green transition-all duration-300
+           hover:bg-green-base hover:-translate-y-0.5 hover:shadow-hover
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-green-bright;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 rounded-full
+           bg-transparent text-white font-semibold text-sm tracking-wide
+           border-2 border-white/50 transition-all duration-300
+           hover:bg-white/10 hover:border-white
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-white;
+  }
+
+  /* ── Eyebrow (label section) ─────────────────────── */
+  .eyebrow {
+    @apply block text-xs font-bold tracking-widest uppercase text-green-bright mb-3;
+  }
+
+  /* ── Source / citation ───────────────────────────── */
+  .source {
+    @apply block text-xs italic opacity-60 mt-1 not-italic;
+  }
+
+  /* ── Icône de carte ──────────────────────────────── */
+  .card-icon-wrap {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center
+           bg-green-bright/10 text-xl mb-4 flex-shrink-0;
+  }
+
+  /* ── Grille 3 colonnes responsive ───────────────── */
+  .grid-3 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5;
+  }
+
+  /* ── Grille 2 colonnes responsive ───────────────── */
+  .grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+
+  /* ── Conteneur centré ────────────────────────────── */
+  .container-reliv {
+    @apply w-full max-w-6xl mx-auto px-6;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATIONS SCROLL
+───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .animate-on-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .animate-on-enter.entered {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Délais d'animation en cascade */
+  .delay-100 { transition-delay: 0.1s; }
+  .delay-200 { transition-delay: 0.2s; }
+  .delay-300 { transition-delay: 0.3s; }
+  .delay-400 { transition-delay: 0.4s; }
+  .delay-500 { transition-delay: 0.5s; }
+}
