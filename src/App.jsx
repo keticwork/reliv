@@ -31,7 +31,7 @@ function DotNav({ activeSection, onDotClick }) {
   return (
     <nav
       aria-label="Navigation par section"
-      className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 hidden lg:flex"
+      className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 max-lg:hidden"
     >
       {SECTIONS.map(({ id, label }) => (
         <button
