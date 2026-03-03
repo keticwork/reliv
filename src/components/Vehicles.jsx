@@ -18,10 +18,13 @@
  * ──────────────────────────────────────────────────────────────
  */
 
+import imgTriporteur from '../assets/images/Velo-cargo-triporteur.png'
+import imgSac        from '../assets/images/velo-sac.jpg'
+import imgPied       from '../assets/images/livraison-a-pied.png'
+
 const VEHICLES = [
   {
-    // img: imgTriporteur,       ← décommenter quand la photo est disponible
-    imgPlaceholder: { emoji: '🚲', label: 'Vélo-cargo triporteur', hint: 'Photo Springare' },
+    img:   imgTriporteur,
     tag:    'Multi-colis · < 15 kg chacun',
     title:  'Vélo-cargo triporteur',
     text:   "Idéal pour les tournées de plusieurs colis sur un périmètre dense. Grande capacité de chargement, excellente stabilité, très agile en milieu urbain et dans les zones résidentielles. Le choix optimal pour les lots e-commerce et les envois groupés.",
@@ -29,8 +32,7 @@ const VEHICLES = [
     bg:     'from-night to-green-dark',
   },
   {
-    // img: imgSac,
-    imgPlaceholder: { emoji: '🎒', label: 'Vélo + sac professionnel', hint: 'Photo hPa' },
+    img:   imgSac,
     tag:    'Petits colis · < 15 kg',
     title:  'Vélo + sac professionnel',
     text:   "Pour les petits colis, documents et envois légers. Le sac grand volume permet de couvrir plusieurs relivraisons en une seule tournée rapide, avec une empreinte au sol minimale et une discrétion maximale dans les espaces résidentiels.",
@@ -38,8 +40,7 @@ const VEHICLES = [
     bg:     'from-green-dark to-green-base',
   },
   {
-    // img: imgPied,
-    imgPlaceholder: { emoji: '🚶', label: 'Livraison à pied', hint: 'Photo OWN' },
+    img:   imgPied,
     tag:    'Zones piétonnes · Accès total',
     title:  'Livraison à pied',
     text:   "Centres historiques, ruelles, halls d'immeubles sécurisés, zones à trafic limité — là où aucun véhicule ne peut accéder, Reliv passe. Une capacité unique qui ouvre des territoires de livraison inédits pour votre réseau.",
@@ -69,27 +70,19 @@ export default function Vehicles({ id }) {
 
         {/* ── Grille véhicules ────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {VEHICLES.map(({ imgPlaceholder, tag, title, text, specs, bg }) => (
+          {VEHICLES.map(({ img, tag, title, text, specs }) => (
             <article
               key={title}
               className="bg-white rounded-xl3 overflow-hidden shadow-card hover:shadow-hover hover:-translate-y-2 transition-all duration-300"
             >
-              {/* Image / placeholder */}
+              {/* Image */}
               <div className="relative h-48 overflow-hidden">
-                {/* ── Remplace ce bloc par <img> quand tu as les photos ── */}
-                <div
-                  className={`w-full h-full bg-gradient-to-br ${bg} flex flex-col items-center justify-center gap-3`}
-                >
-                  <span className="text-5xl opacity-70">{imgPlaceholder.emoji}</span>
-                  <span className="text-white/60 text-xs font-semibold tracking-widest uppercase text-center px-4">
-                    {imgPlaceholder.label}
-                    <br />
-                    <span className="opacity-50 normal-case tracking-normal">
-                      {imgPlaceholder.hint} — à intégrer
-                    </span>
-                  </span>
-                </div>
-                {/* ── Fin placeholder ── */}
+                <img
+                  src={img}
+                  alt={title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
 
                 {/* Tag flottant */}
                 <span className="absolute top-3 left-3 bg-green-bright/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm">
