@@ -130,15 +130,6 @@ export default function Contact({ id }) {
               </div>
             </div>
 
-            {/* Footer léger */}
-            <div className="mt-16 pt-8 border-t border-white/10">
-              <p className="font-heading text-2xl font-bold text-white tracking-widest mb-1">RELIV</p>
-              <p className="text-white/40 text-xs">
-                Micro-entreprise · RC Pro Marchandise Confiée · Franchise TVA Art. 293 B CGI
-              </p>
-              <p className="text-green-bright text-xs mt-1">🌿 100 % cyclo · 0 CO₂ direct · Colis &lt; 15 kg</p>
-              <p className="text-white/30 text-xs mt-2">© 2026 Reliv — Tous droits réservés</p>
-            </div>
           </div>
 
           {/* ── Colonne droite : formulaire ────────────── */}
@@ -253,6 +244,16 @@ export default function Contact({ id }) {
 
           </div>
 
+        </div>
+
+        {/* Footer léger */}
+        <div className="mt-16 pt-8 border-t border-white/10">
+          <p className="font-heading text-2xl font-bold text-white tracking-widest mb-1">RELIV</p>
+          <p className="text-white/40 text-xs">
+            Micro-entreprise · RC Pro Marchandise Confiée · Franchise TVA Art. 293 B CGI
+          </p>
+          <p className="text-green-bright text-xs mt-1">🌿 100 % cyclo · 0 CO₂ direct · Colis &lt; 15 kg</p>
+          <p className="text-white/30 text-xs mt-2">© 2026 Reliv — Tous droits réservés</p>
         </div>
 
       </div>
